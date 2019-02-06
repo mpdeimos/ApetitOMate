@@ -17,4 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\ApetitOMate.Core\ApetitOMate.Core.csproj"/>
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ApetitOMate.ini" CopyToOutputDirectory="Always" Condition="Exists('ApetitOMate.ini')"/>
+  </ItemGroup>
 </Project>
