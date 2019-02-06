@@ -10,7 +10,7 @@ namespace ApetitOMate.Core
         public static Config Instance => instance ?? (instance = new Config());
 
         public ApetitoApiConfig ApetitoApiConfig { get; }
-        //public SlackApiConfig SlackApiConfig { get; }
+        public SlackApiConfig SlackApiConfig { get; }
 
         private Config()
         {
@@ -21,7 +21,7 @@ namespace ApetitOMate.Core
                 .Build();
 
             this.ApetitoApiConfig = configuration.GetSection("ApetitoApi").Get<ApetitoApiConfig>();
-            //this.SlackApiConfig = configuration.GetSection("SlackApi").Get<SlackApiConfig>();
+            this.SlackApiConfig = configuration.GetSection("SlackApi").Get<SlackApiConfig>();
         }
     }
 }
