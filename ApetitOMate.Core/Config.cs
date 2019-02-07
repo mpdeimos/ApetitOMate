@@ -1,5 +1,6 @@
 using System;
-using ApetitOMate.Core.Api;
+using ApetitOMate.Core.Api.Apetito;
+using ApetitOMate.Core.Api.Slack;
 using Microsoft.Extensions.Configuration;
 
 namespace ApetitOMate.Core
@@ -9,8 +10,8 @@ namespace ApetitOMate.Core
         private static Config instance;
         public static Config Instance => instance ?? (instance = new Config());
 
-        public ApetitoApiConfig ApetitoApiConfig { get; }
-        public SlackApiConfig SlackApiConfig { get; }
+        public ApetitoConfig ApetitoConfig { get; }
+        public SlackConfig SlackConfig { get; }
 
         private Config()
         {
@@ -20,8 +21,8 @@ namespace ApetitOMate.Core
                 .AddEnvironmentVariables()
                 .Build();
 
-            this.ApetitoApiConfig = configuration.GetSection("ApetitoApi").Get<ApetitoApiConfig>();
-            this.SlackApiConfig = configuration.GetSection("SlackApi").Get<SlackApiConfig>();
+            this.ApetitoConfig = configuration.GetSection("Apetito").Get<ApetitoConfig>();
+            this.SlackConfig = configuration.GetSection("Slack").Get<SlackConfig>();
         }
     }
 }

@@ -1,12 +1,12 @@
 using Slack.Webhooks;
 
-namespace ApetitOMate.Core.Api
+namespace ApetitOMate.Core.Api.Slack
 {
     public class SlackApiFactory
     {
-        private readonly SlackApiConfig config;
+        private readonly SlackConfig config;
 
-        public SlackApiFactory(SlackApiConfig config)
+        public SlackApiFactory(SlackConfig config)
         {
             this.config = config;
         }

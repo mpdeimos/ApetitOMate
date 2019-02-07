@@ -1,6 +1,6 @@
-namespace ApetitOMate.Core.Api
+namespace ApetitOMate.Core.Api.Slack
 {
-    public class SlackApiConfig
+    public class SlackConfig
     {
         public string WebhookUrl { get; set; }
 

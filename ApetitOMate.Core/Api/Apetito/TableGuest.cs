@@ -1,4 +1,4 @@
-namespace ApetitOMate.Core.Model
+namespace ApetitOMate.Core.Api.Apetito
 {
     public class TableGuest
     {
@@ -9,5 +9,12 @@ namespace ApetitOMate.Core.Model
         public string ArticleDescription { get; set; }
 
         public string ArticleNumber { get; set; }
+
+        public PickupTime PickupTime { get; set; }
+    }
+
+    public class PickupTime
+    {
+        public string PickupTimeSpan { get; set; }
     }
 }
