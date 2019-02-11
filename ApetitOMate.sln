@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApetitOMate.Core", "ApetitO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApetitOMate.Core_Test", "ApetitOMate.Core_Test\ApetitOMate.Core_Test.csproj", "{418544ED-C276-4E1A-A7AE-74B4F07CEAFB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApetitOMate.Functions", "ApetitOMate.Functions\ApetitOMate.Functions.csproj", "{BC6C1090-22E5-4C37-A052-D89AF5EAED12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{418544ED-C276-4E1A-A7AE-74B4F07CEAFB}.Release|x64.Build.0 = Release|Any CPU
 		{418544ED-C276-4E1A-A7AE-74B4F07CEAFB}.Release|x86.ActiveCfg = Release|Any CPU
 		{418544ED-C276-4E1A-A7AE-74B4F07CEAFB}.Release|x86.Build.0 = Release|Any CPU
+		{BC6C1090-22E5-4C37-A052-D89AF5EAED12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC6C1090-22E5-4C37-A052-D89AF5EAED12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC6C1090-22E5-4C37-A052-D89AF5EAED12}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BC6C1090-22E5-4C37-A052-D89AF5EAED12}.Debug|x64.Build.0 = Debug|Any CPU
+		{BC6C1090-22E5-4C37-A052-D89AF5EAED12}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BC6C1090-22E5-4C37-A052-D89AF5EAED12}.Debug|x86.Build.0 = Debug|Any CPU
+		{BC6C1090-22E5-4C37-A052-D89AF5EAED12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC6C1090-22E5-4C37-A052-D89AF5EAED12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC6C1090-22E5-4C37-A052-D89AF5EAED12}.Release|x64.ActiveCfg = Release|Any CPU
+		{BC6C1090-22E5-4C37-A052-D89AF5EAED12}.Release|x64.Build.0 = Release|Any CPU
+		{BC6C1090-22E5-4C37-A052-D89AF5EAED12}.Release|x86.ActiveCfg = Release|Any CPU
+		{BC6C1090-22E5-4C37-A052-D89AF5EAED12}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
