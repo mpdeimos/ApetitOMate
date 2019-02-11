@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApetitOMate.Core", "ApetitO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApetitOMate.Core_Test", "ApetitOMate.Core_Test\ApetitOMate.Core_Test.csproj", "{418544ED-C276-4E1A-A7AE-74B4F07CEAFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApetitOMate.Functions", "ApetitOMate.Functions\ApetitOMate.Functions.csproj", "{BC6C1090-22E5-4C37-A052-D89AF5EAED12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApetitOMate.Function", "ApetitOMate.Function\ApetitOMate.Function.csproj", "{BC6C1090-22E5-4C37-A052-D89AF5EAED12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
