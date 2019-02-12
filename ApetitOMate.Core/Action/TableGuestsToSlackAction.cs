@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApetitOMate.Core.Api.Apetito;
@@ -24,14 +25,21 @@ namespace ApetitOMate.Core.Action
         {
             TableGuest[] guests = await this.apetitoApi.GetTableGuests(DateTime.Today.ToString("yyyy-MM-dd"));
 
-            var messages = guests.GroupBy(guest => guest.PickupTime.PickupTimeSpan).Select(guestsByPickup =>
-                new SlackMessage
-                {
-                    Channel = this.config.SlackConfig.Channel,
-                    Username = "Apetito Bot",
-                    IconEmoji = Emoji.ForkAndKnife,
-                    Text = $"Ordered {guestsByPickup.Count()} menus for {guestsByPickup.Key}",
-                    Attachments = guestsByPickup.GroupBy(guest => (name: guest.ArticleDescription, number: guest.ArticleNumber)).Select(guestsByArticle =>
+            foreach (var message in CreateMessagesForGuests(guests))
+            {
+                await slackApi.PostAsync(message);
+            }
+        }
+
+        private SlackMessage[] CreateMessagesForGuests(TableGuest[] guests)
+        {
+            if (guests.Length == 0)
+            {
+                return new SlackMessage[] { CreateMessage(":exclamation: No menus ordered for today.") };
+            }
+
+            return guests.GroupBy(guest => guest.PickupTime.PickupTimeSpan).Select(guestsByPickup =>
+                CreateMessage($"Ordered {guestsByPickup.Count()} menus for {guestsByPickup.Key}", guestsByPickup.GroupBy(guest => (name: guest.ArticleDescription, number: guest.ArticleNumber)).Select(guestsByArticle =>
                         new SlackAttachment
                         {
                             Title = $"{guestsByArticle.Count()}x {guestsByArticle.Key.name.Trim()} ({guestsByArticle.Key.number})",
@@ -42,11 +50,21 @@ namespace ApetitOMate.Core.Action
                                 }
                             ).ToList()
                         }
-                    ).ToList()
-                }
-            ).ToList();
+                    ).ToArray()
+                )
+            ).ToArray();
+        }
 
-            messages.ForEach(message => slackApi.Post(message));
+        private SlackMessage CreateMessage(string text, params SlackAttachment[] attachments)
+        {
+            return new SlackMessage
+            {
+                Channel = this.config.SlackConfig.Channel,
+                Username = "Apetito Bot",
+                IconEmoji = Emoji.ForkAndKnife,
+                Text = text,
+                Attachments = attachments.ToList()
+            };
         }
     }
 }
