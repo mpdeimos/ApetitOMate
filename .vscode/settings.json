@@ -4,7 +4,7 @@
     "azureFunctions.projectRuntime": "~2",
     "azureFunctions.projectLanguage": "C#",
     "azureFunctions.templateFilter": "Verified",
-    "azureFunctions.deploySubpath": "ApetitOMate.Function/bin/Release/netcoreapp2.1/publish",
+    "azureFunctions.deploySubpath": "ApetitOMate.Function/bin/Release/netcoreapp2.2/publish",
     "azureFunctions.preDeployTask": "publish",
     "debug.internalConsoleOptions": "neverOpen"
 }
