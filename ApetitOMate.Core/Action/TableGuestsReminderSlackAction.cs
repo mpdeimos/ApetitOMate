@@ -10,9 +10,9 @@ namespace ApetitOMate.Core.Action
     public class TableGuestsReminderSlackAction
     {
         private readonly Config config;
-        private readonly SlackClient slackApi;
+        private readonly ISlackClient slackApi;
 
-        public TableGuestsReminderSlackAction(Config config, SlackClient slackApi)
+        public TableGuestsReminderSlackAction(Config config, ISlackClient slackApi)
         {
             this.config = config;
             this.slackApi = slackApi;

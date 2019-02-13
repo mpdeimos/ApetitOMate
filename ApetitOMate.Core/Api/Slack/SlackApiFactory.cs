@@ -11,6 +11,6 @@ namespace ApetitOMate.Core.Api.Slack
             this.config = config;
         }
 
-        public SlackClient Build() => new SlackClient(this.config.WebhookUrl);
+        public ISlackClient Build() => new SlackClient(this.config.WebhookUrl);
     }
 }

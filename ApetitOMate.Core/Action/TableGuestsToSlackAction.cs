@@ -12,9 +12,9 @@ namespace ApetitOMate.Core.Action
     {
         private readonly Config config;
         private readonly ApetitoApi apetitoApi;
-        private readonly SlackClient slackApi;
+        private readonly ISlackClient slackApi;
 
-        public TableGuestsToSlackAction(Config config, ApetitoApi apetitoApi, SlackClient slackApi)
+        public TableGuestsToSlackAction(Config config, ApetitoApi apetitoApi, ISlackClient slackApi)
         {
             this.config = config;
             this.apetitoApi = apetitoApi;
