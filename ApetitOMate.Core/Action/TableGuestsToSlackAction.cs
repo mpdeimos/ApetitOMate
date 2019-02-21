@@ -52,7 +52,7 @@ namespace ApetitOMate.Core.Action
                         }
                     ).ToArray()
                 )
-            ).ToArray();
+            ).Append(CreateMessage(":question: <!here> Who is heating the meals?")).ToArray();
         }
 
         private SlackMessage CreateMessage(string text, params SlackAttachment[] attachments)

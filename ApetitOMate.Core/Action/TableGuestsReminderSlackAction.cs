@@ -25,7 +25,7 @@ namespace ApetitOMate.Core.Action
                 Channel = this.config.SlackConfig.Channel,
                 Username = "Apetito Bot",
                 IconEmoji = Emoji.ForkAndKnife,
-                Text = ":mega: Please order your Apetito menu until 11:00 via <https://www.mylunch-apetito.de>",
+                Text = ":mega: <!channel> Please order your Apetito menu until 11:00 via <https://www.mylunch-apetito.de>",
             });
         }
     }
