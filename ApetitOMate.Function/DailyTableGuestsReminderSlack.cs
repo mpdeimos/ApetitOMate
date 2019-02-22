@@ -15,7 +15,7 @@ namespace ApetitOMate.Function
     public static class DailyTableGuestsReminderSlack
     {
         [FunctionName(nameof(DailyTableGuestsReminderSlack))]
-        public static async Task Run([TimerTrigger("0 40 10 * * *")]TimerInfo myTimer, ILogger log)
+        public static async Task Run([TimerTrigger("0 40 10 * * Mo-Fr")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"{nameof(DailyTableGuestsReminderSlack)} timer trigger function executed at: {DateTime.Now}");
 
