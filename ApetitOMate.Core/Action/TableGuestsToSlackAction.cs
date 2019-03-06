@@ -21,9 +21,10 @@ namespace ApetitOMate.Core.Action
             this.slackApi = slackApi;
         }
 
-        public async Task Run()
+        public async Task Run(DateTime? date = null)
         {
-            TableGuest[] guests = await this.apetitoApi.GetTableGuests(DateTime.Today.ToString("yyyy-MM-dd"));
+            date = date ?? DateTime.Today;
+            TableGuest[] guests = await this.apetitoApi.GetTableGuests(date?.ToString("yyyy-MM-dd"));
 
             foreach (var message in CreateMessagesForGuests(guests))
             {
@@ -38,7 +39,8 @@ namespace ApetitOMate.Core.Action
                 return new SlackMessage[] { CreateMessage(":exclamation: No menus ordered for today.") };
             }
 
-            return guests.GroupBy(guest => guest.PickupTime.PickupTimeSpan).Select(guestsByPickup =>
+            var messages = new List<SlackMessage>();
+            messages.AddRange(guests.Where(guest => guest.IsOrderFulfilled).GroupBy(guest => guest.PickupTime.PickupTimeSpan).Select(guestsByPickup =>
                 CreateMessage($"Ordered {guestsByPickup.Count()} menus for {guestsByPickup.Key}", guestsByPickup.GroupBy(guest => (name: guest.ArticleDescription, number: guest.ArticleNumber)).Select(guestsByArticle =>
                         new SlackAttachment
                         {
@@ -52,7 +54,30 @@ namespace ApetitOMate.Core.Action
                         }
                     ).ToArray()
                 )
-            ).Append(CreateMessage(":question: <!here> Who is heating the meals?")).ToArray();
+            ));
+
+            var incompleteOrders = guests.Where(guest => !guest.IsOrderFulfilled).ToList();
+            if (incompleteOrders.Any())
+            {
+                messages.Add(CreateMessage(null, new SlackAttachment[]
+                    {
+                        new SlackAttachment
+                        {
+                            Title = ":exclamation: The following orders could not be fulfilled:",
+                            Color = "#AA0000",
+                            Fields =  incompleteOrders.Select(guest => new SlackField
+                            {
+                                Value = $"{guest.FirstName} {guest.LastName}: {guest.ArticleDescription.Trim()} ({guest.OrderPositionState})"
+                            }).ToList()
+                        }
+                    }
+                ));
+
+            }
+
+            messages.Add(CreateMessage(":question: <!here> Who is heating the meals?"));
+
+            return messages.ToArray();
         }
 
         private SlackMessage CreateMessage(string text, params SlackAttachment[] attachments)

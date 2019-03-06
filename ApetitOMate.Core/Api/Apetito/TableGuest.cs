@@ -1,3 +1,5 @@
+using System;
+
 namespace ApetitOMate.Core.Api.Apetito
 {
     public class TableGuest
@@ -10,7 +12,15 @@ namespace ApetitOMate.Core.Api.Apetito
 
         public string ArticleNumber { get; set; }
 
+        public string OrderState { get; set; }
+
+        public string OrderPositionState { get; set; }
+
+        public bool IsOrderFulfilled => this.OrderPositionState == "Fulfilled";
+
         public PickupTime PickupTime { get; set; }
+
+        public DateTime ConsumptionDate { get; set; }
     }
 
     public class PickupTime

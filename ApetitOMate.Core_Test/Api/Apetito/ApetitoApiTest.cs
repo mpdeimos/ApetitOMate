@@ -8,12 +8,23 @@ namespace ApetitOMate.Core.Api.Apetito
 {
     public class ApetitoApiTest
     {
+        private ApetitoApi api = new ApetitoApiFactory(Config.Instance.ApetitoConfig).Build();
+
         [Test]
         public async Task TestApi()
         {
-            var api = new ApetitoApiFactory(Config.Instance.ApetitoConfig).Build();
-            TableGuest[] guests = await api.GetTableGuests("2019-02-05");
+            TableGuest[] guests = await this.api.GetTableGuests("2019-02-05");
             guests.Where(guest => guest.ArticleDescription == "Geschnittene Currywurst").Should().HaveCount(3);
+        }
+
+        [Test]
+        public async Task TestIncompleteTableMenu()
+        {
+            TableGuest[] guests = await this.api.GetTableGuests("2019-03-01");
+            guests.Where(guest => !guest.IsOrderFulfilled)
+                .Should().HaveCount(1)
+                .And.Subject.First()
+                    .Should().Match<TableGuest>(guest => guest.OrderState == "4" && guest.OrderPositionState == "UnsuficcientStock");
         }
     }
 }
