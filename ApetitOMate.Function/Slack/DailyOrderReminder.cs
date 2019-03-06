@@ -10,21 +10,20 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
-namespace ApetitOMate.Function
+namespace ApetitOMate.Function.Slack
 {
-    public static class DailyTableGuestsToSlack
+    public static class DailyOrderReminder
     {
-        [FunctionName(nameof(DailyTableGuestsToSlack))]
-        public static async Task Run([TimerTrigger("0 0 11 * * Mo-Fr")]TimerInfo myTimer, ILogger log)
+        [FunctionName(nameof(DailyOrderReminder))]
+        public static async Task Run([TimerTrigger("0 40 10 * * Mo-Fr")]TimerInfo myTimer, ILogger log)
         {
-            log.LogInformation($"{nameof(DailyTableGuestsToSlack)} timer trigger function executed at: {DateTime.Now}");
+            log.LogInformation($"{nameof(DailyOrderReminder)} timer trigger function executed at: {DateTime.Now}");
 
             try
             {
                 Config config = Config.Instance;
-                await new TableGuestsToSlackAction(
+                await new OrderReminderSlackAction(
                     config,
-                    new ApetitoApiFactory(config.ApetitoConfig).Build(),
                     new SlackApiFactory(config.SlackConfig).Build()
                 ).Run();
             }
@@ -35,9 +34,9 @@ namespace ApetitOMate.Function
             }
         }
 
-        [FunctionName(nameof(DailyTableGuestsToSlack) + "_Http")]
+        [FunctionName(nameof(DailyOrderReminder) + "_Http")]
         public static async Task RunHttp(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = nameof(DailyTableGuestsToSlack))] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = nameof(DailyOrderReminder))] HttpRequest req,
             ILogger log)
         {
             await Run(null as TimerInfo, log);

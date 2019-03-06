@@ -7,12 +7,12 @@ using Slack.Webhooks;
 
 namespace ApetitOMate.Core.Action
 {
-    public class TableGuestsReminderSlackAction
+    public class OrderReminderSlackAction
     {
         private readonly Config config;
         private readonly ISlackClient slackApi;
 
-        public TableGuestsReminderSlackAction(Config config, ISlackClient slackApi)
+        public OrderReminderSlackAction(Config config, ISlackClient slackApi)
         {
             this.config = config;
             this.slackApi = slackApi;

@@ -8,13 +8,13 @@ using Slack.Webhooks;
 
 namespace ApetitOMate.Core.Action
 {
-    public class TableGuestsToSlackAction
+    public class OrderOverviewSlackAction
     {
         private readonly Config config;
         private readonly ApetitoApi apetitoApi;
         private readonly ISlackClient slackApi;
 
-        public TableGuestsToSlackAction(Config config, ApetitoApi apetitoApi, ISlackClient slackApi)
+        public OrderOverviewSlackAction(Config config, ApetitoApi apetitoApi, ISlackClient slackApi)
         {
             this.config = config;
             this.apetitoApi = apetitoApi;
@@ -24,7 +24,7 @@ namespace ApetitOMate.Core.Action
         public async Task Run(DateTime? date = null)
         {
             date = date ?? DateTime.Today;
-            TableGuest[] guests = await this.apetitoApi.GetTableGuests(date?.ToString("yyyy-MM-dd"));
+            Order[] guests = await this.apetitoApi.GetTableGuests(date?.ToString("yyyy-MM-dd"));
 
             foreach (var message in CreateMessagesForGuests(guests))
             {
@@ -32,7 +32,7 @@ namespace ApetitOMate.Core.Action
             }
         }
 
-        private SlackMessage[] CreateMessagesForGuests(TableGuest[] guests)
+        private SlackMessage[] CreateMessagesForGuests(Order[] guests)
         {
             if (guests.Length == 0)
             {

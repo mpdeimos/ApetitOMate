@@ -13,18 +13,18 @@ namespace ApetitOMate.Core.Api.Apetito
         [Test]
         public async Task TestApi()
         {
-            TableGuest[] guests = await this.api.GetTableGuests("2019-02-05");
+            Order[] guests = await this.api.GetTableGuests("2019-02-05");
             guests.Where(guest => guest.ArticleDescription == "Geschnittene Currywurst").Should().HaveCount(3);
         }
 
         [Test]
         public async Task TestIncompleteTableMenu()
         {
-            TableGuest[] guests = await this.api.GetTableGuests("2019-03-01");
+            Order[] guests = await this.api.GetTableGuests("2019-03-01");
             guests.Where(guest => !guest.IsOrderFulfilled)
                 .Should().HaveCount(1)
                 .And.Subject.First()
-                    .Should().Match<TableGuest>(guest => guest.OrderState == "4" && guest.OrderPositionState == "UnsuficcientStock");
+                    .Should().Match<Order>(guest => guest.OrderState == "4" && guest.OrderPositionState == "UnsuficcientStock");
         }
     }
 }

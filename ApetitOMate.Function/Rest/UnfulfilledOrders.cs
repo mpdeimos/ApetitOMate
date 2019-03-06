@@ -11,7 +11,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
-namespace ApetitOMate.Function
+namespace ApetitOMate.Function.Rest
 {
     public static class UnfulfilledOrders
     {
@@ -32,7 +32,7 @@ namespace ApetitOMate.Function
                 until = from;
             }
 
-            var retriever = new TableGuestsUnfulfilledOrderRetriever(new ApetitoApiFactory(Config.Instance.ApetitoConfig).Build());
+            var retriever = new UnfulfilledOrderRetriever(new ApetitoApiFactory(Config.Instance.ApetitoConfig).Build());
             return await retriever.Get(DateTime.Parse(from), DateTime.Parse(until));
         }
     }

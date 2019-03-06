@@ -2,7 +2,7 @@ using System;
 
 namespace ApetitOMate.Core.Api.Apetito
 {
-    public class TableGuest
+    public class Order
     {
         public string FirstName { get; set; }
 
