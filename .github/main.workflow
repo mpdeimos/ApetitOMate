@@ -3,7 +3,7 @@ workflow "CI" {
   resolves = [
     "Azure Login",
     "Deploy Azure Function",
-    "Dotnet Publish",
+    "Dotnet Test",
   ]
 }
 
@@ -11,13 +11,13 @@ action "Dotnet Test" {
   uses = "Azure/github-actions/dotnetcore-cli@9e977220e411dbf2a3b79a8566fddb83b11584ea"
   runs = "test"
   secrets = ["Apetito__EMail", "Apetito__Password"]
+  needs = ["Dotnet Publish"]
 }
 
 action "Dotnet Publish" {
   uses = "Azure/github-actions/dotnetcore-cli@9e977220e411dbf2a3b79a8566fddb83b11584ea"
   args = "publish -c Release"
   secrets = ["Apetito__EMail", "Apetito__Password"]
-  needs = ["Dotnet Test"]
 }
 
 action "Azure Login" {
