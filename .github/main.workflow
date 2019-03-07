@@ -3,7 +3,6 @@ workflow "CI" {
   resolves = [
     "Azure Login",
     "Deploy Azure Function",
-    "Dotnet Test",
     "Dotnet Publish",
   ]
 }
