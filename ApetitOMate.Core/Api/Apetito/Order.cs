@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 
 namespace ApetitOMate.Core.Api.Apetito
 {
     public class Order
     {
+        private static readonly HashSet<string> FulfilledOrderStates = new HashSet<string> { "Fulfilled", "ReservationPlaced" };
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -16,7 +18,7 @@ namespace ApetitOMate.Core.Api.Apetito
 
         public string OrderPositionState { get; set; }
 
-        public bool IsOrderFulfilled => this.OrderPositionState == "Fulfilled";
+        public bool IsOrderFulfilled => FulfilledOrderStates.Contains(this.OrderPositionState);
 
         public PickupTime PickupTime { get; set; }
 
