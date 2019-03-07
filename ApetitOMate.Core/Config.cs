@@ -1,5 +1,6 @@
 using System;
 using ApetitOMate.Core.Api.Apetito;
+using ApetitOMate.Core.Api.Mail;
 using ApetitOMate.Core.Api.Slack;
 using Microsoft.Extensions.Configuration;
 
@@ -12,6 +13,7 @@ namespace ApetitOMate.Core
 
         public ApetitoConfig ApetitoConfig { get; }
         public SlackConfig SlackConfig { get; }
+        public MailConfig MailConfig { get; }
 
         private Config()
         {
@@ -23,6 +25,7 @@ namespace ApetitOMate.Core
 
             this.ApetitoConfig = configuration.GetSection("Apetito").Get<ApetitoConfig>();
             this.SlackConfig = configuration.GetSection("Slack").Get<SlackConfig>();
+            this.MailConfig = configuration.GetSection("Mail").Get<MailConfig>();
         }
     }
 }

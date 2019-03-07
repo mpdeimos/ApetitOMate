@@ -16,7 +16,7 @@ namespace ApetitOMate.Core.Action
 
         public async Task<Order[]> Get(DateTime from, DateTime until)
         {
-            Order[] guests = await this.apetitoApi.GetTableGuests(from.ToString("yyyy-MM-dd"), until.ToString("yyyy-MM-dd"));
+            Order[] guests = await this.apetitoApi.GetOrders(from.ToString("yyyy-MM-dd"), until.ToString("yyyy-MM-dd"));
             return guests.Where(guest => !guest.IsOrderFulfilled).ToArray();
         }
     }

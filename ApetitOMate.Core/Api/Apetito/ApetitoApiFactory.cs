@@ -1,8 +1,10 @@
 using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using RestEase;
+using RestEase.Implementation;
 
 namespace ApetitOMate.Core.Api.Apetito
 {
@@ -20,14 +22,11 @@ namespace ApetitOMate.Core.Api.Apetito
             return RestClient.For<ApetitoApi>("https://api.apetito.de", async (request, cancellationToken) =>
             {
                 var token = await this.apiToken.Value;
-
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.BearerToken);
-
-                var uriBuilder = new UriBuilder(request.RequestUri.OriginalString);
-                var query = HttpUtility.ParseQueryString(request.RequestUri.Query);
-                query["customerId"] = token.CustomerId;
-                uriBuilder.Query = query.ToString();
-                request.RequestUri = uriBuilder.Uri;
+                request.RequestUri = new Uri(request.RequestUri.OriginalString.Replace(
+                    Uri.EscapeUriString("<customerId>"),
+                    token.CustomerId
+                ));
             });
         }
 

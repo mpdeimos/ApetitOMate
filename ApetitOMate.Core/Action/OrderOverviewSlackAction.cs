@@ -24,7 +24,7 @@ namespace ApetitOMate.Core.Action
         public async Task Run(DateTime? date = null)
         {
             date = date ?? DateTime.Today;
-            Order[] guests = await this.apetitoApi.GetTableGuests(date?.ToString("yyyy-MM-dd"));
+            Order[] guests = await this.apetitoApi.GetOrders(date?.ToString("yyyy-MM-dd"));
 
             foreach (var message in CreateMessagesForGuests(guests))
             {
