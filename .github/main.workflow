@@ -8,13 +8,13 @@ workflow "CI" {
 }
 
 action "Dotnet Test" {
-  uses = "Azure/github-actions/dotnetcore-cli@9e977220e411dbf2a3b79a8566fddb83b11584ea"
-  args = "test --filter TestCategory!=GDI"
+  uses = "Azure/github-actions/dotnetcore-cli@master"
+  args = "test --filter 'TestCategory!=GDI'"
   secrets = ["Apetito__EMail", "Apetito__Password"]
 }
 
 action "Dotnet Publish" {
-  uses = "Azure/github-actions/dotnetcore-cli@9e977220e411dbf2a3b79a8566fddb83b11584ea"
+  uses = "Azure/github-actions/dotnetcore-cli@master"
   args = "publish -c Release"
   secrets = ["Apetito__EMail", "Apetito__Password"]
   needs = ["Dotnet Test"]

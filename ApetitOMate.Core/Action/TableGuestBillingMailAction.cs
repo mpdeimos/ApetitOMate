@@ -22,7 +22,7 @@ namespace ApetitOMate.Core.Action
             this.mailClient = mailClient;
         }
 
-        public async Task Run(DateTime? from = null, DateTime? to = null)
+        public async Task Run(DateTime? from = null, DateTime? to = null, string receiver = null)
         {
             if (to == null)
             {
@@ -52,7 +52,8 @@ namespace ApetitOMate.Core.Action
             builder.Attachments.Add($"Apetito_Summary_{from.Value.ToString("yyyyMMdd")}-{to.Value.ToString("yyyyMMdd")}.xlsx", summary);
             builder.Attachments.Add($"Apetito_Details_{from.Value.ToString("yyyyMMdd")}-{to.Value.ToString("yyyyMMdd")}.xlsx", details);
 
-            await this.mailClient.Send(EMailSubject(from.Value, to.Value), builder.ToMessageBody(), this.apetitoConfig.EMail);
+            receiver = receiver ?? this.apetitoConfig.EMail;
+            await this.mailClient.Send(EMailSubject(from.Value, to.Value), builder.ToMessageBody(), receiver);
         }
 
         private string EMailSubject(DateTime from, DateTime to)
