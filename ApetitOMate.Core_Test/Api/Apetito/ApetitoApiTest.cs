@@ -22,6 +22,8 @@ namespace ApetitOMate.Core.Api.Apetito
             guests.Where(guest => guest.ArticleDescription == "Geschnittene Currywurst").Should().HaveCount(3);
         }
 
+
+        [Category("GDI")]
         [Test]
         public async Task TestIncompleteOrders()
         {
@@ -33,6 +35,7 @@ namespace ApetitOMate.Core.Api.Apetito
         }
 
 
+        [Category("GDI")]
         [Test]
         public async Task TestGetTableGuests()
         {
