@@ -1,23 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>ApetitOMate.Core</RootNamespace>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="nunit" Version="3.11.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="nunit" Version="3.11.0"/>
+    <PackageReference Include="NUnit3TestAdapter" Version="3.11.0"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0"/>
     <PackageReference Include="FluentAssertions" Version="5.5.3"/>
+    <PackageReference Include="TableIO.ClosedXml" Version="0.8.0"/>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\ApetitOMate.Core\ApetitOMate.Core.csproj"/>
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="ApetitOMate.ini" CopyToOutputDirectory="Always" Condition="Exists('ApetitOMate.ini')"/>
   </ItemGroup>

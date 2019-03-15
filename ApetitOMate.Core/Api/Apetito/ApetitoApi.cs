@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using RestEase;
@@ -17,6 +18,9 @@ namespace ApetitOMate.Core.Api.Apetito
 
         [Get("tableguest/tableguestgroups/<customerId>")]
         Task<TableGuestGroup[]> GetTableGuestGroups();
+
+        [Post("order/mylunch/TableGuestBilling/ExcelExport/<customerId>")]
+        Task<Stream> DownloadTableGuestBilling([Body] TableGuestBillingRequestOptions options, [Query("from")] string timeFrom, [Query("to")] string timeTo);
     }
 
     public static class ApetitoApiExtensions

@@ -1,7 +1,11 @@
+using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ApetitOMate.Core.Api.Apetito;
+using ClosedXML.Excel;
 using FluentAssertions;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -49,6 +53,41 @@ namespace ApetitOMate.Core.Api.Apetito
             TableGuestGroup[] groups = await this.api.GetTableGuestGroups();
             groups.Where(group => group.Id == 197).Should().HaveCount(1)
                 .And.Subject.First().Should().Match<TableGuestGroup>(group => group.GroupName == "MAUS");
+        }
+
+
+        [Test]
+        public async Task TestDownloadTableGuestBillingDetail()
+        {
+            Stream download = await this.api.DownloadTableGuestBilling(new TableGuestBillingRequestOptions
+            {
+                TableGuestGroups = (await this.api.GetTableGuestGroups()).Select(group => group.GroupName).ToArray(),
+                AllChecked = true,
+                Kind = EKind.Detail
+            }, "2019-03-13", "2019-03-13");
+
+
+            using (var workbook = new XLWorkbook(download))
+            {
+                workbook.Worksheet(1).RowsUsed().Should().HaveCount(19);
+            }
+        }
+
+        [Test]
+        public async Task TestDownloadTableGuestBillingGesamt()
+        {
+            Stream download = await this.api.DownloadTableGuestBilling(new TableGuestBillingRequestOptions
+            {
+                TableGuestGroups = (await this.api.GetTableGuestGroups()).Select(group => group.GroupName).ToArray(),
+                AllChecked = true,
+                Kind = EKind.Gesamt
+            }, "2019-03-13", "2019-03-13");
+
+
+            using (var workbook = new XLWorkbook(download))
+            {
+                workbook.Worksheet(1).RowsUsed().Should().HaveCount(18);
+            }
         }
     }
 }
