@@ -9,11 +9,8 @@ workflow "CI" {
 
 action "Dotnet Test" {
   uses = "Azure/github-actions/dotnetcore-cli@master"
-  args = "test"
+  args = "test --filter TestCategory!=GDI"
   secrets = ["Apetito__EMail", "Apetito__Password"]
-  env = {
-    CI = "github"
-  }
 }
 
 action "Dotnet Publish" {

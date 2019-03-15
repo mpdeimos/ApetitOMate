@@ -26,11 +26,6 @@ namespace ApetitOMate.Core.Api.Apetito
         [Test]
         public async Task TestIncompleteOrders()
         {
-            if (Environment.GetEnvironmentVariable("CI") == "github")
-            {
-                Assert.Ignore("Cannot run without GDI");
-            }
-
             Order[] guests = await this.api.GetOrders("2019-03-01");
             guests.Where(guest => !guest.IsOrderFulfilled)
                 .Should().HaveCount(1)
@@ -42,11 +37,6 @@ namespace ApetitOMate.Core.Api.Apetito
         [Test]
         public async Task TestGetTableGuests()
         {
-            if (Environment.GetEnvironmentVariable("CI") == "github")
-            {
-                Assert.Ignore("Cannot run without GDI");
-            }
-
             TableGuest[] guests = await this.api.GetTableGuests();
             guests.Where(guest => guest.EmailAddress.EndsWith("@cqse.eu")).Should().NotBeEmpty();
             foreach (TableGuest disabledGuest in guests.Where(guest => guest.IsLocked == true))
@@ -66,7 +56,7 @@ namespace ApetitOMate.Core.Api.Apetito
                 .And.Subject.First().Should().Match<TableGuestGroup>(group => group.GroupName == "MAUS");
         }
 
-
+        [Category("GDI")]
         [Test]
         public async Task TestDownloadTableGuestBillingDetail()
         {
@@ -84,6 +74,7 @@ namespace ApetitOMate.Core.Api.Apetito
             }
         }
 
+        [Category("GDI")]
         [Test]
         public async Task TestDownloadTableGuestBillingGesamt()
         {
