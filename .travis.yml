@@ -2,11 +2,10 @@ dist: xenial
 language: csharp
 mono: none
 dotnet: 2.2
-before_install:
-  - sudo apt-get install -y libgdiplus
 addons:
   apt:
-    update: true
+    packages:
+      - libgdiplus
 install:
   - dotnet restore
 script:
