@@ -6,9 +6,10 @@ Automation for Apetito Lunch Service
 ### Infrastructure
 
 * [ ] Better local debugging experience (auto-start Azurite)
-* [ ] Auto-deploy to Azure from GitHub Action
+* [x] Auto-deploy to Azure from GitHub Action
 
 ### Features
 
-* [ ] Auto enable guests with mail matching a given pattern
+* [x] Auto enable guests with mail matching a given pattern
 * [ ] Auto export monthly orders
+* [ ] Remind users that there are unfulfilled orders that might be billed

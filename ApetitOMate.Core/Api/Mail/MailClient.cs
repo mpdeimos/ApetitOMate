@@ -44,6 +44,9 @@ namespace ApetitOMate.Core.Api.Mail
         }
 
         public async Task Send(string subject, string text, params string[] to)
+            => await this.Send(subject, new BodyBuilder { TextBody = text }.ToMessageBody(), to);
+
+        public async Task Send(string subject, MimeEntity body, params string[] to)
         {
             await this.EnsureConnected();
 
@@ -51,10 +54,7 @@ namespace ApetitOMate.Core.Api.Mail
             message.From.Add(new MailboxAddress(this.config.Name ?? this.config.Username, this.config.Username));
             message.To.AddRange(to.Select(a => new MailboxAddress(a)));
             message.Subject = subject;
-            message.Body = new TextPart("plain")
-            {
-                Text = text
-            };
+            message.Body = body;
 
             await this.client.SendAsync(message);
         }
