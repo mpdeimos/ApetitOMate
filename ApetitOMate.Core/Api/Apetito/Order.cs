@@ -14,6 +14,8 @@ namespace ApetitOMate.Core.Api.Apetito
 
         public string ArticleNumber { get; set; }
 
+        public int Quantity { get; set; }
+
         public string OrderState { get; set; }
 
         public string OrderPositionState { get; set; }

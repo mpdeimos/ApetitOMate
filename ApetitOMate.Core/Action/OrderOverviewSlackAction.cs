@@ -41,14 +41,14 @@ namespace ApetitOMate.Core.Action
 
             var messages = new List<SlackMessage>();
             messages.AddRange(guests.Where(guest => guest.IsOrderFulfilled).GroupBy(guest => guest.PickupTime.PickupTimeSpan).Select(guestsByPickup =>
-                CreateMessage($"Ordered {guestsByPickup.Count()} menus for {guestsByPickup.Key}", guestsByPickup.GroupBy(guest => (name: guest.ArticleDescription, number: guest.ArticleNumber)).Select(guestsByArticle =>
+                CreateMessage($"Ordered {guestsByPickup.Sum(order => order.Quantity)} menus for {guestsByPickup.Key}", guestsByPickup.GroupBy(guest => (name: guest.ArticleDescription, number: guest.ArticleNumber)).Select(guestsByArticle =>
                         new SlackAttachment
                         {
-                            Title = $"{guestsByArticle.Count()}x {guestsByArticle.Key.name.Trim()} ({guestsByArticle.Key.number})",
+                            Title = $"{guestsByArticle.Sum(order => order.Quantity)}x {guestsByArticle.Key.name.Trim()} ({guestsByArticle.Key.number})",
                             Fields = guestsByArticle.Select(guest =>
                                 new SlackField
                                 {
-                                    Value = $"{guest.FirstName} {guest.LastName}"
+                                    Value = $"{guest.FirstName} {guest.LastName}" + (guest.Quantity <= 1 ? "" : $" ({guest.Quantity}x)")
                                 }
                             ).ToList()
                         }
