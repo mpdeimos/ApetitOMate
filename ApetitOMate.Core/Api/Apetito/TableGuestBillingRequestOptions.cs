@@ -5,8 +5,8 @@ namespace ApetitOMate.Core.Api.Apetito
 {
     public class TableGuestBillingRequestOptions
     {
-        [JsonProperty("tableGuestGroups")]
-        public string[] TableGuestGroups { get; set; } = { };
+        [JsonProperty("TableGuestGroupIds")]
+        public int[] TableGuestGroupIds { get; set; } = { };
 
         [JsonProperty("art")]
         public EKind Kind { get; set; } = EKind.Gesamt;

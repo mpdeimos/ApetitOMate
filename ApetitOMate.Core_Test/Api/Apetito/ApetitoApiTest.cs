@@ -62,7 +62,7 @@ namespace ApetitOMate.Core.Api.Apetito
         {
             Stream download = await this.api.DownloadTableGuestBilling(new TableGuestBillingRequestOptions
             {
-                TableGuestGroups = (await this.api.GetTableGuestGroups()).Select(group => group.GroupName).ToArray(),
+                TableGuestGroupIds = (await this.api.GetTableGuestGroups()).Select(group => group.Id).ToArray(),
                 AllChecked = true,
                 Kind = EKind.Detail
             }, "2019-03-13", "2019-03-13");
@@ -80,7 +80,7 @@ namespace ApetitOMate.Core.Api.Apetito
         {
             Stream download = await this.api.DownloadTableGuestBilling(new TableGuestBillingRequestOptions
             {
-                TableGuestGroups = (await this.api.GetTableGuestGroups()).Select(group => group.GroupName).ToArray(),
+                TableGuestGroupIds = (await this.api.GetTableGuestGroups()).Select(group => group.Id).ToArray(),
                 AllChecked = true,
                 Kind = EKind.Gesamt
             }, "2019-03-13", "2019-03-13");

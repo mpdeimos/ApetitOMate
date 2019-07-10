@@ -2,3 +2,4 @@ bin/
 obj/
 ApetitOMate.ini
 local.settings.json
+node_modules/

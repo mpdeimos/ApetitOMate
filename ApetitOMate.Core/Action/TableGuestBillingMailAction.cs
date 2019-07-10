@@ -38,7 +38,7 @@ namespace ApetitOMate.Core.Action
             var options = new TableGuestBillingRequestOptions
             {
                 Kind = EKind.Gesamt,
-                TableGuestGroups = guestGroups.Select(g => g.GroupName).ToArray(),
+                TableGuestGroupIds = guestGroups.Select(g => g.Id).ToArray(),
                 AllChecked = true,
             };
 

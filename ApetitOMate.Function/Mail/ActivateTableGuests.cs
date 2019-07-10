@@ -18,7 +18,7 @@ namespace ApetitOMate.Function.Mail
     public static class ActivateTableGuests
     {
         [FunctionName(nameof(ActivateTableGuests))]
-        public static async Task Run([TimerTrigger("0 */30 8-18 * * Mo-Fr")]TimerInfo myTimer, ILogger log)
+        public static async Task Run([TimerTrigger("0 0 9-14 * * Mo-Fr")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"{nameof(ActivateTableGuests)} timer trigger function executed at: {DateTime.Now}");
             await ActivateGuests(log);
