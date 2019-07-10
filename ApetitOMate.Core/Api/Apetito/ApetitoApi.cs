@@ -27,6 +27,9 @@ namespace ApetitOMate.Core.Api.Apetito
 
         [Get("warehouse/inventory/view?customerNumber=<customerId>")]
         Task<Inventory[]> GetInventory([Query("storageLocationId", Format = nameof(StorageLocation.Id))] StorageLocation storageLocation, [Query] bool showArticlesWithoutStock = false);
+
+        [Get("warehouse/accountingorders/<customerId>")]
+        Task<InventoryOrder[]> GetInventoryOrders();
     }
 
     public static class ApetitoApiExtensions

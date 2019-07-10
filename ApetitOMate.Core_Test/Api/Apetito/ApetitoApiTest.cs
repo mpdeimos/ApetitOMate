@@ -96,7 +96,7 @@ namespace ApetitOMate.Core.Api.Apetito
         public async Task TestGetStorageLocations()
         {
             StorageLocation[] locations = await this.api.GetStorageLocations();
-            locations.Should().HaveCount(1).And.Subject.First().Should().Match<StorageLocation>(location => location.Id == 135);
+            locations.Should().HaveCountGreaterThan(1).And.Subject.First().Should().Match<StorageLocation>(location => location.Id == 135);
         }
 
         [Test]
@@ -109,6 +109,13 @@ namespace ApetitOMate.Core.Api.Apetito
 
             Inventory[] inventoryInStock = await this.api.GetInventory(locations.First(), false);
             inventoryInStock.Should().NotContain(inventory => inventory.StockQuantity == 0);
+        }
+
+        [Test]
+        public async Task TestGetInventoryOrders()
+        {
+            InventoryOrder[] orders = await this.api.GetInventoryOrders();
+            orders.Should().Contain(order => order.GoodsReceipt != null && order.GoodsReceipt.IsBookedToStorageLocations);
         }
     }
 }

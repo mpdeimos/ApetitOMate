@@ -26,6 +26,12 @@ namespace ApetitOMate.Core.Action
 
         public async Task Run(string receiver = null)
         {
+            InventoryOrder[] orders = await this.apetitoApi.GetInventoryOrders();
+            if (orders.Any(order => !order.GoodsReceipt?.IsBookedToStorageLocations ?? true))
+            {
+                return;
+            }
+
             foreach (StorageLocation location in await this.apetitoApi.GetStorageLocations())
             {
                 Inventory[] inventory = await this.apetitoApi.GetInventory(location);
