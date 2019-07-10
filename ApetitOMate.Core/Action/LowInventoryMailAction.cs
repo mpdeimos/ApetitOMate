@@ -26,29 +26,31 @@ namespace ApetitOMate.Core.Action
 
         public async Task Run(string receiver = null)
         {
-            StorageLocation[] locations = await this.apetitoApi.GetStorageLocations();
-            IEnumerable<Inventory[]> allInventory = await Task.WhenAll(locations.Select(location => this.apetitoApi.GetInventory(location)));
-            int available = allInventory.SelectMany(inventory => inventory).Sum(inventory => inventory.AvailableQuantity);
-
-            if (available > apetitoConfig.LowInventory)
+            foreach (StorageLocation location in await this.apetitoApi.GetStorageLocations())
             {
-                return;
+                Inventory[] inventory = await this.apetitoApi.GetInventory(location);
+                int available = inventory.Sum(i => i.AvailableQuantity);
+
+                if (available > apetitoConfig.LowInventory)
+                {
+                    continue;
+                }
+
+                var builder = new BodyBuilder()
+                {
+                    TextBody = EMailText(location, available)
+                };
+
+                receiver = receiver ?? this.apetitoConfig.EMail;
+                await this.mailClient.Send(EMailSubject(location, available), builder.ToMessageBody(), receiver);
             }
-
-            var builder = new BodyBuilder()
-            {
-                TextBody = EMailText(available)
-            };
-
-            receiver = receiver ?? this.apetitoConfig.EMail;
-            await this.mailClient.Send(EMailSubject(available), builder.ToMessageBody(), receiver);
         }
 
-        private string EMailSubject(int available)
-         => $@"Low Apetito Stock ({available} meals left)";
+        private string EMailSubject(StorageLocation location, int available)
+        => $@"Low Apetito Stock ({available} meals left in {location.Name})";
 
-        private string EMailText(int available) // TODO: mention until when we should book
-        => $@"Apetito inventory has low stock, only {available} meals are left.
+        private string EMailText(StorageLocation location, int available) // TODO: mention until when we should book
+        => $@"Apetito inventory has low stock, only {available} meals are left in {location.Name}.
                 
 Please order new meals at: {InventoryUrl}";
     }
