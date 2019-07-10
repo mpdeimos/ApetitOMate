@@ -7,5 +7,7 @@ namespace ApetitOMate.Core.Api.Apetito
         public string Password { get; set; }
 
         public string DefaultGroupName { get; set; }
+
+        public int LowInventory { get; set; }
     }
 }

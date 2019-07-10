@@ -91,5 +91,24 @@ namespace ApetitOMate.Core.Api.Apetito
                 workbook.Worksheet(1).RowsUsed().Should().HaveCount(18);
             }
         }
+
+        [Test]
+        public async Task TestGetStorageLocations()
+        {
+            StorageLocation[] locations = await this.api.GetStorageLocations();
+            locations.Should().HaveCount(1).And.Subject.First().Should().Match<StorageLocation>(location => location.Id == 135);
+        }
+
+        [Test]
+        public async Task TestGetInventory()
+        {
+            StorageLocation[] locations = await this.api.GetStorageLocations();
+
+            Inventory[] inventoryAll = await this.api.GetInventory(locations.First(), true);
+            inventoryAll.Should().Contain(inventory => inventory.StockQuantity == 0);
+
+            Inventory[] inventoryInStock = await this.api.GetInventory(locations.First(), false);
+            inventoryInStock.Should().NotContain(inventory => inventory.StockQuantity == 0);
+        }
     }
 }

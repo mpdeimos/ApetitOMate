@@ -21,6 +21,12 @@ namespace ApetitOMate.Core.Api.Apetito
 
         [Post("order/mylunch/TableGuestBilling/ExcelExport/<customerId>")]
         Task<Stream> DownloadTableGuestBilling([Body] TableGuestBillingRequestOptions options, [Query("from")] string timeFrom, [Query("to")] string timeTo);
+
+        [Get("warehouse/storagelocations/<customerId>")]
+        Task<StorageLocation[]> GetStorageLocations();
+
+        [Get("warehouse/inventory/view?customerNumber=<customerId>")]
+        Task<Inventory[]> GetInventory([Query("storageLocationId", Format = nameof(StorageLocation.Id))] StorageLocation storageLocation, [Query] bool showArticlesWithoutStock = false);
     }
 
     public static class ApetitoApiExtensions
