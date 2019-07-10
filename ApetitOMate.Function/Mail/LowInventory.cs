@@ -14,7 +14,7 @@ namespace ApetitOMate.Function.Mail
     public static class LowInventory
     {
         [FunctionName(nameof(LowInventory))]
-        public static async Task Run([TimerTrigger("0 30 11 * * Mo,Mi")]TimerInfo myTimer, ILogger log)
+        public static async Task Run([TimerTrigger("0 30 11 * * Mo,We")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"{nameof(LowInventory)} timer trigger function executed at: {DateTime.Now}");
             await SendLowInventoryMail(log);
