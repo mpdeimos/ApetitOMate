@@ -1,0 +1,28 @@
+name: CI
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "2.2.300"
+      - name: Test
+        run: dotnet test --filter TestCategory!=GDI
+        env:
+          Apetito__EMail: ${{ secrets.Apetito__EMail }}
+          Apetito__Password: ${{ secrets.Apetito__Password }}
+
+  deploy:
+    if: github.ref == 'refs/heads/github-actions-vnext'
+    needs: build
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "2.2.300"
+      - name: Publish
+        run: dotnet publish -c Release
