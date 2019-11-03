@@ -39,14 +39,8 @@ namespace ApetitOMate.Core.Api.Apetito
         {
             TableGuest[] guests = await this.api.GetTableGuests();
             guests.Where(guest => guest.EmailAddress.EndsWith("@cqse.eu")).Should().NotBeEmpty();
-            foreach (TableGuest disabledGuest in guests.Where(guest => guest.IsLocked == true))
-            {
-                disabledGuest.IsLocked = false;
-                TableGuest updated = await this.api.UpdateTableGuest(disabledGuest.Id, disabledGuest);
-                updated.IsLocked.Should().BeFalse();
-            }
-
         }
+
 
         [Test]
         public async Task TestGetTableGuestGroups()

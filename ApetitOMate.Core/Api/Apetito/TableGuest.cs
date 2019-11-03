@@ -9,9 +9,15 @@ namespace ApetitOMate.Core.Api.Apetito
     {
         private readonly JObject backing;
 
-        public int Id => this.backing.Value<int>(nameof(Id));
+        public Guid Id => Guid.Parse(this.backing.Value<string>(nameof(Id)));
 
         public string EmailAddress => this.backing.Value<string>(nameof(EmailAddress));
+
+        public RegistrationStatus Status
+        {
+            get => Enum.Parse<RegistrationStatus>(this.backing.Value<string>(nameof(Status)));
+            set => this.backing[nameof(Status)] = Enum.GetName(typeof(RegistrationStatus), value);
+        }
 
         public bool IsLocked
         {
@@ -43,6 +49,13 @@ namespace ApetitOMate.Core.Api.Apetito
             {
                 return new TableGuest(serializer.Deserialize<JObject>(reader));
             }
+        }
+
+
+        public enum RegistrationStatus
+        {
+            Registered = 2,
+            Activated = 3
         }
     }
 }

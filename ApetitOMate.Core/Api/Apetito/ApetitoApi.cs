@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -13,8 +14,8 @@ namespace ApetitOMate.Core.Api.Apetito
         [Get("tableguest/TableGuests/<customerId>")]
         Task<TableGuest[]> GetTableGuests();
 
-        [Put("tableguest/TableGuests/<customerId>/{guestId}")]
-        Task<TableGuest> UpdateTableGuest([Path] int guestId, [Body] TableGuest guest);
+        [Post("tableguest/TableGuests/register/<customerId>/AccountActivation")]
+        Task ActivateTableGuests([Body] params TableGuest[] guests);
 
         [Get("tableguest/tableguestgroups/<customerId>")]
         Task<TableGuestGroup[]> GetTableGuestGroups();
