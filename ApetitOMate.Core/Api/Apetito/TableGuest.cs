@@ -13,9 +13,16 @@ namespace ApetitOMate.Core.Api.Apetito
 
         public string EmailAddress => this.backing.Value<string>(nameof(EmailAddress));
 
-        public RegistrationStatus Status
+        public RegistrationStatus? Status
         {
-            get => Enum.Parse<RegistrationStatus>(this.backing.Value<string>(nameof(Status)));
+            get
+            {
+                if (Enum.TryParse<RegistrationStatus>(this.backing.Value<string>(nameof(Status)), true, out RegistrationStatus value))
+                {
+                    return value;
+                }
+                return null;
+            }
             set => this.backing[nameof(Status)] = Enum.GetName(typeof(RegistrationStatus), value);
         }
 
@@ -54,6 +61,7 @@ namespace ApetitOMate.Core.Api.Apetito
 
         public enum RegistrationStatus
         {
+            InvitationSend = 1,
             Registered = 2,
             Activated = 3
         }
