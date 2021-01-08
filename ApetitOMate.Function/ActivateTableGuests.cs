@@ -13,7 +13,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
-namespace ApetitOMate.Function.Mail
+namespace ApetitOMate.Function
 {
     public static class ActivateTableGuests
     {
@@ -38,17 +38,13 @@ namespace ApetitOMate.Function.Mail
             try
             {
                 Config config = Config.Instance;
-                using (MailClient mailClient = new MailClientFactory(config.MailConfig).Build())
-                {
-                    TableGuest[] activated = await new ActivateTableGuestAction(
-                            config.ApetitoConfig,
-                            new ApetitoApiFactory(config.ApetitoConfig).Build(),
-                            mailClient
-                        ).Run();
+                TableGuest[] activated = await new ActivateTableGuestAction(
+                        config.ApetitoConfig,
+                        new ApetitoApiFactory(config.ApetitoConfig).Build()
+                    ).Run();
 
-                    log.LogInformation($"Activated {activated.Length} guests: " + string.Join(", ", activated.Select(a => a.EmailAddress)));
-                    return activated;
-                }
+                log.LogInformation($"Activated {activated.Length} guests: " + string.Join(", ", activated.Select(a => a.EmailAddress)));
+                return activated;
             }
             catch (Exception e)
             {

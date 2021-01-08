@@ -9,6 +9,7 @@ namespace ApetitOMate.Core.Action
     public class UnfulfilledOrderRetrieverTest
     {
         [Test]
+        [Ignore("Sadly the unfulfilled orders have been deleted")]
         public async Task Test()
         {
             var retriever = new UnfulfilledOrderRetriever(new ApetitoApiFactory(Config.Instance.ApetitoConfig).Build());

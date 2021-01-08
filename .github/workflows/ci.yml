@@ -1,0 +1,43 @@
+name: CI
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "2.2.300"
+      - name: .NET Test
+        run: dotnet test --filter TestCategory!=GDI
+        env:
+          Apetito__EMail: ${{ secrets.Apetito__EMail }}
+          Apetito__Password: ${{ secrets.Apetito__Password }}
+      - name: .NET Publish
+        run: dotnet publish ApetitOMate.Function -c Release -o ./publish
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: publish
+          path: ApetitOMate.Function/publish
+
+  deploy:
+    if: github.ref == 'refs/heads/github-actions-vnext'
+    needs: build
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: publish
+      - name: Login via Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_SECRET }}
+      - name: Deploy Azure Function
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: ApetitOMate
+          package: ./publish

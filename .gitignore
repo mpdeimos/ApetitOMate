@@ -3,3 +3,6 @@ obj/
 ApetitOMate.ini
 local.settings.json
 node_modules/
+__blobstorage__
+__azurite_*
+package-lock.json

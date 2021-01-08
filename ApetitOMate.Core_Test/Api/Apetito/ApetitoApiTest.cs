@@ -24,6 +24,7 @@ namespace ApetitOMate.Core.Api.Apetito
 
 
         [Test]
+        [Ignore("Sadly the unfulfilled orders have been deleted")]
         public async Task TestIncompleteOrders()
         {
             Order[] guests = await this.api.GetOrders("2019-03-01");
@@ -39,14 +40,8 @@ namespace ApetitOMate.Core.Api.Apetito
         {
             TableGuest[] guests = await this.api.GetTableGuests();
             guests.Where(guest => guest.EmailAddress.EndsWith("@cqse.eu")).Should().NotBeEmpty();
-            foreach (TableGuest disabledGuest in guests.Where(guest => guest.IsLocked == true))
-            {
-                disabledGuest.IsLocked = false;
-                TableGuest updated = await this.api.UpdateTableGuest(disabledGuest.Id, disabledGuest);
-                updated.IsLocked.Should().BeFalse();
-            }
-
         }
+
 
         [Test]
         public async Task TestGetTableGuestGroups()
