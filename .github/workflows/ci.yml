@@ -34,13 +34,7 @@ jobs:
       - name: Login via Azure CLI
         uses: azure/login@v1
         with:
-          creds: |
-            {
-              "clientId": "${{ secrets.AZURE_SERVICE_APP_ID }}",
-              "clientSecret": "${{ secrets.AZURE_SERVICE_PASSWORD }}",
-              "subscriptionId": "${{ secrets.AZURE_SUBSCRIPTION }}",
-              "tenantId": "${{ secrets.AZURE_SERVICE_TENANT }}"
-            }
+          creds: ${{ secrets.AZURE_SECRET }}
       - name: Deploy Azure Function
         uses: Azure/functions-action@v1
         id: fa
